@@ -1,0 +1,55 @@
+{
+  "name": "evil-front-modules",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Evil Front adaptation for modules.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/demiazz/evil-front-modules.git",
+  },
+  "main": "lib/index.js",
+  "module": "es/index.js",
+  "jsnext:main": "es/index.js",
+  "files": [
+    "dist",
+    "lib",
+    "es",
+    "src"
+  ],
+  "scripts": {
+    "build:commonjs": "$(npm bin)/cross-env BABEL_ENV=commonjs $(npm bin)/babel src --out-dir lib",
+    "build:es": "$(npm bin)/cross-env BABEL_ENV=es $(npm bin)/babel src --out-dir es",
+    "build:umd": "$(npm bin)/cross-env BABEL_ENV=commonjs NODE_ENV=development $(npm bin)/webpack src/index.js dist/evil-blocks.js",
+    "build:umd:min": "$(npm bin)/cross-env BABEL_ENV=commonjs NODE_ENV=production $(npm bin)/webpack src/index.js dist/evil-blocks.min.js",
+    "build": "npm run build:commonjs && npm run build:es && npm run build:umd && npm run build:umd:min"
+  },
+  "dependencies": {
+    "jquery": ">= 2.1.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.9.0",
+    "babel-preset-es2015-webpack": "^6.4.2",
+    "cross-env": "^2.0.0",
+    "webpack": "^1.13.1"
+  },
+  "ava": {
+    "files": [
+      "test/**/*.js",
+      "!test/setup.js",
+      "!test/fixtures.js"
+    ],
+    "source": [
+      "src/**/*.js"
+    ],
+    "tap": false,
+    "require": [
+      "babel-register",
+      "./test/setup.js"
+    ],
+    "babel": "inherit"
+  }
+}
